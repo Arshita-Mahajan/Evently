@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 // Helper function to generate JWT token
 const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+    return jwt.sign({ id }, process.env.JWT_SECRET || "MySecretKey", { expiresIn: '30d' });
 };
 
 // Register User
@@ -46,6 +46,8 @@ export const registerUser = async (req, res) => {
 // Login User
 export const loginUser = async (req, res) => {
     const { username, password } = req.body;
+
+    console.log('Login attempt:', { username, password });
 
     if (!username || !password) {
         return res.status(400).json({ message: 'Both username and password are required.' });

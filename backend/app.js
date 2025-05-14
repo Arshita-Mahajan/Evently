@@ -28,7 +28,7 @@ const PORT = process.env.PORT || 4000;
 
 // Middleware setup
 app.use(cors({
-  origin: ['http://localhost:4000','http://localhost:3000'], // Allow frontend's origin
+  origin: ['http://localhost:4000','http://localhost:3001'], // Allow frontend's origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With'], // Allow headers
   credentials: true, // Allow credentials (cookies or authorization headers)
@@ -98,21 +98,8 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-
-// Connect to MongoDB and start server
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-      console.log('Connected to MongoDB');
-      app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
-  })
-  .catch(err => console.error('MongoDB connection error:', err));
-
-// Global Error Handler
-app.use((err, req, res, next) => {
-   console.error('Global Error Handler:', err);
-   res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 export default app;

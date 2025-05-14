@@ -5,7 +5,7 @@ dotenv.config(); // Load environment variables from .env file
 
 const connectDB = async () => {
     try {
-        const URL = process.env.MONGO_URI; // Use your MongoDB URI from .env
+        const URL = process.env.MONGO_URI || "KUNAL_MONGO_DB_URL";
         await mongoose.connect(URL, {
             ssl: true, // Ensure SSL is enabled if using Atlas
         });

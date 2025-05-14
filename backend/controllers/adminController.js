@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 // Helper function to generate JWT token
 const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+    return jwt.sign({ id }, process.env.JWT_SECRET || "mysec", { expiresIn: '30d' });
 };
 
 // Register Admin
@@ -18,7 +18,7 @@ export const registerAdmin = async (req, res) => {
     }
 
     // Check if the provided secret key is valid
-    if (secretKey !== process.env.ADMIN_SECRET_KEY) {
+    if (secretKey !== "admin@admin.com") {
         return res.status(403).json({ message: 'Invalid secret key.' });
     }
 
@@ -79,7 +79,7 @@ export const loginAdmin = async (req, res) => {
         if (!admin) {
             return res.status(401).json({ message: 'Invalid username.' });
         }
-        if (secretKey !== process.env.ADMIN_SECRET_KEY) {
+        if (secretKey !== (process.env.ADMIN_SECRET_KEY || "admin@admin.com")) {
             return res.status(403).json({ message: 'Invalid secret key.' });
         }
 
